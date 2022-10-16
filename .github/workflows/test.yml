@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/step-go@v3
-        with: go-version '>=1.19.2'
+        with: go-version: '>=1.19.2'
       - uses: actions/checkout@v3
       - run: go test ./... -converprofile=coverage.out
       - name: report coverage
