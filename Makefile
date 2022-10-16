@@ -10,7 +10,7 @@ build-local: ## Build docker image to local development
 	docker compose build --no-cache
 
 up: ##Do docker compose up with hot reroad
-	docker compose down
+	docker compose up -d
 
 down: ## Do docker compose down
 	docker compose down
@@ -22,7 +22,7 @@ ps: ## Check container status
 	docker compose ps
 
 test: ## Execute tests
-	go test -race -shuffle=on ./..
+	go test -race -shuffle=on ./...
 
 help: ## Show options
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
