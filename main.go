@@ -5,14 +5,9 @@ import (
 	"fmt"
 	"log"
 	"net"
-	"net/http"
 	"os"
-	"os/signal"
-	"syscall"
-	"time"
 
 	"github.com/taaag51/go_todo_app/config"
-	"golang.org/x/sync/errgroup"
 )
 
 func main() {
@@ -36,24 +31,4 @@ func run(ctx context.Context) error {
 	mux := NewMux()
 	s := NewServer(l, mux)
 	return s.Run(ctx)
-	}
-
-	eg, ctx := errgroup.WithContext(ctx)
-	eg.Go(func() error {
-		// ListenAndServeメソッドではなく、Serveメソッドに変更する
-		if err := s.Serve(l); err != nil &&
-			err != http.ErrServerClosed {
-			log.Printf("faild to close: %+v", err)
-			return err
-		}
-		return nil
-	})
-
-	<-ctx.Done()
-	if err := s.Shutdown(context.Background()); err != nil {
-		log.Printf("faild to shutdown: %+v", err)
-	}
-
-	return eg.Wait()
-
 }
