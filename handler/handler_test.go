@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/go-playground/validator/v10"
+	"github.com/taaag51/go_todo_app/entity"
 	"github.com/taaag51/go_todo_app/store"
 	"github.com/taaag51/go_todo_app/testutil"
 )
