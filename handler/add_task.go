@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/taaag51/go_todo_app/entitiy"
+	"github.com/taaag51/go_todo_app/entity"
 	"github.com/taaag51/go_todo_app/store"
 )
 
@@ -33,9 +33,9 @@ func (at *AddTask) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	t := &entitiy.Task{
+	t := &entity.Task{
 		Title:   b.Title,
-		Status:  entitiy.TaskStatusTodo,
+		Status:  entity.TaskStatusTodo,
 		Created: time.Now(),
 	}
 	id, err := store.Tasks.Add(t)

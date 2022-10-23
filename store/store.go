@@ -3,22 +3,22 @@ package store
 import (
 	"errors"
 
-	"github.com/taaag51/go_todo_app/entitiy"
+	"github.com/taaag51/go_todo_app/entity"
 )
 
 var (
-	Tasks = &TaskStore{Tasks: map[entitiy.TaskID]*entitiy.Task{}}
+	Tasks = &TaskStore{Tasks: map[entity.TaskID]*entity.Task{}}
 
 	ErrNotFound = errors.New("not found")
 )
 
 type TaskStore struct {
 	// 動作確認用の仮実装なのであえてexportしてる
-	LastID entitiy.TaskID
-	Tasks  map[entitiy.TaskID]*entitiy.Task
+	LastID entity.TaskID
+	Tasks  map[entity.TaskID]*entity.Task
 }
 
-func (ts *TaskStore) Add(t *entitiy.Task) (entitiy.TaskID, error) {
+func (ts *TaskStore) Add(t *entity.Task) (entity.TaskID, error) {
 	ts.LastID++
 	t.ID = ts.LastID
 	ts.Tasks[t.ID] = t
@@ -27,8 +27,8 @@ func (ts *TaskStore) Add(t *entitiy.Task) (entitiy.TaskID, error) {
 }
 
 // All はソート済みタスク一覧を返す
-func (ts *TaskStore) All() entitiy.Tasks {
-	tasks := make([]*entitiy.Task, len(ts.Tasks))
+func (ts *TaskStore) All() entity.Tasks {
+	tasks := make([]*entity.Task, len(ts.Tasks))
 	for i, t := range ts.Tasks {
 		tasks[i-1] = t
 	}
