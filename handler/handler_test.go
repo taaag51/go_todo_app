@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/taaag51/go_todo_app/entitiy"
 	"github.com/taaag51/go_todo_app/store"
 	"github.com/taaag51/go_todo_app/testutil"
 )
@@ -33,7 +32,7 @@ func TestAddTask(t *testing.T) {
 			reqFile: "testdata/add_task/bad_req.json.golden",
 			want: want{
 				status:  http.StatusBadRequest,
-				rspFile: "testdata/add_task/bad_req_rsp.json.golden",
+				rspFile: "testdata/add_task/bad_rsp.json.golden",
 			},
 		},
 	}
@@ -43,14 +42,15 @@ func TestAddTask(t *testing.T) {
 			t.Parallel()
 
 			w := httptest.NewRecorder()
-			r := httptest.NewRequest(http.MethodPost, "/tasks", bytes.NewReader(testutil.LoadFile(t, tt.reqFile)))
+			r := httptest.NewRequest(
+				http.MethodPost,
+				"/tasks",
+				bytes.NewReader(testutil.LoadFile(t, tt.reqFile)),
+			)
 
-			sut := AddTask{
-				Store: &store.TaskStore{
-					Tasks: map[entitiy.TaskID]*entitiy.Task{},
-				},
-				Validator: *validator.New(),
-			}
+			sut := AddTask{Store: &store.TaskStore{
+				Tasks: map[entity.TaskID]*entity.Task{},
+			}, Validator: validator.New()}
 			sut.ServeHTTP(w, r)
 
 			resp := w.Result()
